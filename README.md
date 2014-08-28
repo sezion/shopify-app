@@ -32,6 +32,7 @@ The configuration file has the `api_key` and the `secret` for Shopify. More info
 
 To start creating videos, first you need templates. In `public/scripts` is were templates' scripts are stored. One file for each template. 
 The process for a new video using the Sezion SDK (in `public/js`) is:
+
 1. Read the script file. It's a `json`.
 2. Create the template object and call `TemplateNew`. This returns an `id` that we need later.
 3. For every product selected to create a video, validate the dynamic fields and create the video object.
