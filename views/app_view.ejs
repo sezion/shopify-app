@@ -1,0 +1,446 @@
+<% include layout.ejs %>
+
+<script>
+  //This needs to appear in every page. It's the configuration of Shopify
+  ShopifyApp.ready (function (){
+      ShopifyApp.Bar.loadingOff();
+      ShopifyApp.Bar.initialize ({
+          icon: '/img/ico_szn_shopify_60px.png',
+          title: '<%= title %>',
+          buttons: {
+            primary: {
+              label: 'Sezion.com',
+              href: 'https://sezion.com',
+              target: 'new'
+            }
+          }
+      });
+  });
+  
+</script>
+
+<body>
+  <article class="row">
+    <form role="form">
+      <div class="jumbotron first-action" style="padding-top: 4rem;padding-bottom: 4rem; background-color: #E1E1E1;">
+      
+        <div class="row" style="margin-bottom: 15px">
+          <label class="col-sm-3 col-sm-offset-4" style="width: 20%;padding-right: 5px;padding-top: 10px;">If you are not registered yet, </label>
+          <button id="button-green" class="btn btn-default link" type="button">CLICK HERE</button>
+        </div>
+      
+        <div class="row">
+          <div class="form-group col-sm-4 col-sm-offset-1" style="padding-right: 0;">
+            <input type="text" class="form-control" id="accountId" placeholder="Enter your account ID">
+          </div>
+          <div class="form-group col-sm-5">
+            <input type="text" class="form-control" id="accountSecret" placeholder="Enter your account secret">
+          </div>
+          <div class="form-group col-sm-1" style="padding-left: 0;">
+            <button id="saveCreds" class="btn btn-default" type="button">SAVE</button>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label for="products_list" class="col-sm-6 col-sm-offset-3">Do you want videos for all your products or just a part of them?</label>
+          <div class="col-sm-8 col-sm-offset-2">
+            <!--  SHOPIFY ONLY  -->
+            <select id="products_list" class="form-control common-props multiselect" multiple="multiple">
+              <% for (var i=0; i< products.length; i++) { %>
+              <option value="<%= i %>"><%= products[i].title %></option>
+              <% } %>
+            </select><!-- END -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2"><hr style="border-top: 2px solid #eee;"></div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <label for="templates_list" class="col-sm-2 col-sm-offset-5">Select a template</label>
+          <div class="col-sm-8 col-sm-offset-2">
+            <select id="templates_list" class="form-control common-props multiselect select-single"> 
+              <option value="1">Example with image and text</option>
+              <option value="2">Example with text</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3" style="margin-bottom: 30px;">
+          <iframe id="yt-video" width="560" height="315" src="//www.youtube.com/embed/zAgexPQN2p4?rel=0" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+      
+      <div class="jumbotron col-sm-8 col-sm-offset-2" style="padding-bottom: 20px;">
+        <div class="row" id="medias">
+          
+          <div id="text1" class="form-group col-sm-12">
+            <label for="text_example1" class="col-sm-offset-3" style="font-weight: normal;">Select one property or introduce your custom text field</label>
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Text <span class="caret"></span></button>
+                <ul id="dropdown_text1" class="dropdown-menu" role="menu">
+                  <li><a href="#">Title</a></li>
+                  <li><a href="#">Description</a></li>
+                  <li><a href="#">Product type</a></li>
+                  <li><a href="#">Vendor</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" id="text_example1" placeholder="Enter some text...">
+            </div>
+          </div>
+          
+          <div id="image1" class="form-group col-sm-12" style="margin-top: 20px">
+            <label for="image_example1" class="col-sm-offset-2" style="font-weight: normal;">Select one of the product images or insert an URL for a custom image</label>
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Image <span class="caret"></span></button>
+                <ul id="dropdown_image1" class="dropdown-menu" role="menu">
+                  <li><a href="#">Main picture</a></li>
+                  <li><a href="#">Second picture</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" id="image_example1" placeholder="Enter an image url...">
+            </div>
+          </div>
+          
+          <div id="text2" class="form-group col-sm-12" hidden>
+            <label for="text_example2" class="col-sm-offset-3" style="font-weight: normal;">Select one property or introduce your custom text field</label>
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Text <span class="caret"></span></button>
+                <ul id="dropdown_text2" class="dropdown-menu" role="menu">
+                  <li><a href="#">Title</a></li>
+                  <li><a href="#">Description</a></li>
+                  <li><a href="#">Product type</a></li>
+                  <li><a href="#">Vendor</a></li>
+                </ul>
+              </div>
+              <input type="text" class="form-control" id="text_example2" placeholder="Enter some text...">
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-sm-8 col-sm-offset-2">
+          <button id="createVideo" class="btn btn-success btn-lg btn-block common-props" type="button" style="font-weight: bold;">DONE! CREATE VIDEO(S)</button>
+          <label style="font-weight: normal;">* If your video is not generated visit Sezion's <a href="https://sezion.com/account/notifications" target="_blank">notification page</a> to see what happened</label>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-sm-4 col-sm-offset-2">
+          <input type="text" class="form-control" id="youtubeID" placeholder="Enter your youtube account ID">
+        </div>
+        <div class="form-group col-sm-4">
+          <select id="youtube-privacy" class="form-control common-props multiselect select-single"> 
+              <option value="public">Public</option>
+              <option value="hidden">Unlisted</option>
+              <option value="private">Private</option>
+            </select>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group col-sm-8 col-sm-offset-2">
+          <button id="connectYoutube" class="btn btn-info btn-lg btn-block common-props" type="button" style="font-weight: bold;">Connect your Youtube Account</button>
+        </div>
+      </div>
+    </form>
+  </article>
+  
+  <script>
+    var sezion = null;
+    var templateId;
+    var products = <%-JSON.stringify(products)%>; //JSON with all the products info. You can see it in the log
+    
+    function ready (err) {
+      if (err) {
+        ShopifyApp.Bar.loadingOff();
+        ShopifyApp.flashError ('Something wrong happened');
+      }
+      else {
+        ShopifyApp.Bar.loadingOff();
+        //Disable some fields and enable others. If the user doesn't click on SAVE, he can't use the fields below
+        $('#accountId').prop('readonly', true);
+        $('#accountSecret').prop('readonly', true);
+        $('#saveCreds').prop('disabled' ,true);
+        ShopifyApp.flashNotice ('Account connected');
+        
+        $('#text_example1').prop('readonly', false);
+        $('#image_example1').prop('readonly', false);
+        $('.common-props').prop('disabled', false);
+        
+        //Depending on the template selected, some fields are visible and others don't.
+        //TODO For now there are only 2 templates. This function will change when more are added
+        $('#templates_list').change (function () {
+          if (this.value == 1) {
+            $('#text1').removeAttr("hidden");
+            $('#image1').removeAttr("hidden");
+            $('#text2').attr("hidden", true);
+            $('#yt-video').attr("src", "//www.youtube.com/embed/zAgexPQN2p4?rel=0");
+          }
+          else if (this.value == 2) {
+            $('#text1').attr("hidden", true);
+            $('#image1').attr("hidden", true);
+            $('#text2').removeAttr("hidden");
+            $('#yt-video').attr("src", "//www.youtube.com/embed/QIbbSeZK0pw?rel=0");
+          }
+        });
+        
+        //When the user clicks on the dropdowns for the DYNAMIC MEDIAS, the input is self-overwrited
+        //TODO This will change when the templates examples do, because there will be more dynamics. Maybe this can be done with classes instead of IDs
+        $('#dropdown_text1 li a').click (function (event) {
+          event.preventDefault();
+          $('#text_example1').val(this.text);
+        });
+        $('#dropdown_text2 li a').click (function (event) {
+          event.preventDefault();
+          $('#text_example2').val(this.text);
+        });
+        $('#dropdown_image1 li a').click (function (event) {
+          event.preventDefault();
+          $('#image_example1').val(this.text);
+        });
+        
+        //Create video
+        $('#createVideo').click (function () {
+          //First create the template and then assign the dynamic medias and create the video
+          var jsonFile, inputMedias;
+          var templates_list = $('#templates_list');
+          
+          //All examples will be posted in the folder "scripts". TODO For now there are only 2 templates. This "if" will change when more are added
+          if (templates_list.val() == 1) jsonFile = "/scripts/example.json";
+          else if (templates_list.val() == 2) jsonFile = "/scripts/example2.json";
+          
+          $.getJSON(jsonFile, function (data) {
+            console.log("JSON: " + JSON.stringify(data));
+            //Making the template
+            var template = {
+              name        : "Shopify",
+              description : "Created using Sezion app in Shopify",
+              inputScripts: [JSON.stringify(data)],
+              outProfiles : ["MP4_H264_AAC_640x480_24fps"],
+              videoOutput : {
+                              type: "sezion" //In the video it's overwrited to Youtube
+                            }
+            }
+            console.log("TEMPLATE: " + JSON.stringify(template));
+            sezion.TemplateNew (template, function (err, template) {
+              if (err) console.log("ERR: " + JSON.stringify(err));
+              else {
+                templateId = template.id;
+                
+                //VIDEO
+                var productsList = $('#products_list');
+                
+                if (productsList.val() != null) {
+                  //For every selected product, validate the dynamics and create the video
+                  for (var i=0; i < productsList.val().length; i++) {
+                  
+                    var video;
+                    //TODO For now there are only 2 templates. This "if" will change when more are added
+                    if (templates_list.val() == 1) {
+                      //Image
+                      var imageInput = $('#image_example1');
+                      var textInput1 = $('#text_example1');
+                      
+                      if (!imageInput.val()) {
+                        ShopifyApp.flashError('Select a valid image');
+                        return;
+                      }
+                      if (!textInput1.val()) {
+                        ShopifyApp.flashError('Enter a valid text');
+                        return;
+                      }
+                      else {
+                        //The description of the product is the field "body_html" in json object. The rest are "title", "product_type" and "vendor"
+                        var textField = textInput1.val().toLowerCase();
+                        if (textField == "description") textField = 'body_html';
+                        else textField = textField.replace(" ", "_");
+                      }
+                      
+                      var image;
+                      //A product can have 0 or more images. I assume it has at least one.
+                      if (imageInput.val().split(' ')[0]=='Main') {
+                        image = products[productsList.val()[i]].images[0].src;
+                      }
+                      else if (imageInput.val().split(' ')[0]=='Second') {
+                        if (products[productsList.val()[i]].images[1] === undefined) {
+                          alert('The product selected doesn\'t have a second image. Choose another one');
+                          return;
+                        }
+                        else image = products[productsList.val()[i]].images[1].src;
+                      }
+                      else image = imageInput.val();
+                      
+                      var youtubeID = $('#youtubeID');
+                      if (!youtubeID.val()) {
+                        ShopifyApp.flashError('Connect your youtube account with Sezion and enter a valid ID');
+                        return;
+                      }
+                      
+                      video = {
+                        name: products[productsList.val()[i]]['title'],
+                        description : products[productsList.val()[i]]['body_html'],
+                        inputMedias: [{
+                                        inputID: "image1",
+                                        type   : "image",
+                                        http   : image
+                                      },
+                                      {
+                                        inputID: "text1",
+                                        type   : "text",
+                                        text   : products[productsList.val()[i]][textField] || textInput1.val()
+                                      }],
+                        videoOutput: {
+                                        type: "youtube",
+                                        youtube: {
+                                          id: youtubeID.val(),
+                                          license: "cc",
+                                          privacy: $('#youtube-privacy').val(),
+                                          category: "People",
+                                          keywords: products[productsList.val()[i]]['tags'] || ""
+                                        }
+                                     }
+                      };
+                    }
+                    else if (templates_list.val() == 2) {
+                      var textInput2 = $('#text_example2');
+                      
+                      if(!textInput2.val()) {
+                        ShopifyApp.flashError('Enter a valid text');
+                        return;
+                      }
+                      else {
+                        //The description of the product is the field "body_html" in json object. The rest are "title", "product_type" and "vendor"
+                        var textField = textInput2.val().toLowerCase();
+                        if (textField == "description") textField = 'body_html';
+                        else textField = textField.replace(" ", "_");
+                      }
+                      
+                      var youtubeID = $('#youtubeID');
+                      if (!youtubeID.val()) {
+                        ShopifyApp.flashError('Connect your youtube account with Sezion and enter a valid ID');
+                        return;
+                      }
+                      
+                      video = {
+                        name: products[productsList.val()[i]]['title'],
+                        description : products[productsList.val()[i]]['body_html'],
+                        inputMedias: [{
+                                          inputID: "text1",
+                                          type   : "text",
+                                          text   : products[productsList.val()[i]][textField] || textInput2.val()
+                                        }],
+                        videoOutput: {
+                                        type: "youtube",
+                                        youtube: {
+                                          id: youtubeID.val(),
+                                          license: "cc",
+                                          privacy: $('#youtube-privacy').val(),
+                                          category: "People",
+                                          keywords: products[productsList.val()[i]]['tags'] || ""
+                                        }
+                                     }
+                      };
+                    }
+                    console.log("VIDEO: " + JSON.stringify(video));
+                    sezion.TemplateVideoNew (templateId, video, function (err, res) {
+                      if (err) console.log("ERR: " + JSON.stringify(err));
+                      else {
+                        ShopifyApp.flashNotice ('Your video is being processed');
+                        console.log(res);
+                      }
+                    });
+                  }
+                }
+                else {
+                  ShopifyApp.flashError ('Select at least one product');
+                }
+              }
+            });
+          });
+        });
+        
+        $('#connectYoutube').click (function () {
+          //Open a new window/tab to connect youtube with sezion
+          $.post("https://sezion.com/account/youtube_connect", {action: "connectYoutube", accountID: $('#accountId').val(), accountSecret: $('#accountSecret').val()}, function (data) {
+            console.log("DATA: " + JSON.stringify(data));
+            if (!data.error) {
+              window.open(data);
+            }
+            else ShopifyApp.flashError('An error ocurred. Contact the app administrator');
+          });
+        });
+      }
+    }
+          
+    $(document).ready(function() {
+      //Plugin http://davidstutz.github.io/bootstrap-multiselect/
+      $('#products_list').multiselect({
+        nonSelectedText: 'No products selected yet',
+        buttonWidth: '100%',
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true,
+        numberDisplayed: 1
+      });
+      $('.select-single').multiselect({
+        buttonWidth: '100%'
+      });
+      
+      $('#text_example1').prop('readonly', true);
+      $('#image_example1').prop('readonly', true);
+      $('.common-props').prop('disabled', true);
+      
+      //When click on SAVE, initialize the SEZION SDK and call the function ready() above
+      $('#saveCreds').click (function () {
+        
+        var accountID = $('#accountId').val();
+        var accountSecret = $('#accountSecret').val();
+        if (accountID != '' && accountSecret != '') {
+          ShopifyApp.Bar.loadingOn();
+          sezion = new SezionSDK (accountID, accountSecret, ready);
+        }
+        else {
+          alert('Enter your account id and account secret');
+        }
+      });
+    });
+
+  </script>
+  
+  
+  <script>
+    //If the user isn't registered, this opens the new floating window in sezion.com using Shopify API
+    $('button.link').click (function () {
+      ShopifyApp.Modal.open({
+        src: '//sezion.com/signup?type=FREE',
+        title: 'Register in Sezion',
+        width: 'large',
+        height: 400,
+        buttons: {
+          primary: { label: "OK", 
+                     callback: function (message, data) {
+                                  ShopifyApp.Modal.close(true, data); 
+                               }
+                   }
+        }
+      }, function (result, data) {
+        ShopifyApp.Modal.close();
+      });
+      return false;
+    });
+  </script>
+
+</body>

@@ -1,0 +1,20 @@
+[
+  {
+    "image": {
+      "id": "image1",
+      "duration": 3000,
+      "play": 0
+    }
+  },
+  {
+    "text": {
+      "id": "text1",
+      "duration": 1000,
+      "play": [
+        "image1.start",
+        2000
+      ],
+      "textLines": 3
+    }
+  }
+]

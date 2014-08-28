@@ -1,0 +1,15 @@
+{
+  "name": "shopify_app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node shopify_app.js"
+  },
+  "dependencies": {
+    "express": "3.x",
+    "oauth"  : "*",
+    "nconf"  : "*",
+    "ejs"    : "*",
+    "request": "*"
+  }
+}
